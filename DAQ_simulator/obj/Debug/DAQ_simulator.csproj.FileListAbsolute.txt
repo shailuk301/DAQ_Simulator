@@ -1,0 +1,9 @@
+C:\Users\shailu k\Documents\software engg\Assignment_1\Coding\DAQ_simulator\bin\Debug\DAQ_simulator.exe.config
+C:\Users\shailu k\Documents\software engg\Assignment_1\Coding\DAQ_simulator\bin\Debug\DAQ_simulator.exe
+C:\Users\shailu k\Documents\software engg\Assignment_1\Coding\DAQ_simulator\bin\Debug\DAQ_simulator.pdb
+C:\Users\shailu k\Documents\software engg\Assignment_1\Coding\DAQ_simulator\obj\Debug\DAQ_simulator.csprojAssemblyReference.cache
+C:\Users\shailu k\Documents\software engg\Assignment_1\Coding\DAQ_simulator\obj\Debug\DAQ_simulator.Form1.resources
+C:\Users\shailu k\Documents\software engg\Assignment_1\Coding\DAQ_simulator\obj\Debug\DAQ_simulator.Properties.Resources.resources
+C:\Users\shailu k\Documents\software engg\Assignment_1\Coding\DAQ_simulator\obj\Debug\DAQ_simulator.csproj.GenerateResource.cache
+C:\Users\shailu k\Documents\software engg\Assignment_1\Coding\DAQ_simulator\obj\Debug\DAQ_simulator.exe
+C:\Users\shailu k\Documents\software engg\Assignment_1\Coding\DAQ_simulator\obj\Debug\DAQ_simulator.pdb
