@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace DAQ_simulator
 {
@@ -31,8 +32,20 @@ namespace DAQ_simulator
             for (counter = 0; counter < totalid; counter++)
             {
                 sensor[counter] = new Sensor(counter);
-                sensorvaluearray[counter] = sensor[counter].SensorValue();
-                System.Threading.Thread.Sleep(100);
+
+                // Loop for Analog Sensor Values
+                if (counter <= 7)
+                {
+                    sensorvaluearray[counter] = sensor[counter].SensorValue();
+                    System.Threading.Thread.Sleep(30);
+                }
+                // Loop for Digital Sensor Values
+                else
+                {
+                    sensorvaluearray[counter] = sensor[counter].Digital();
+                    System.Threading.Thread.Sleep(30);
+                }
+                
                 sensoridarray[counter] = sensor[counter].GetSensorId();
             }
 
@@ -105,7 +118,7 @@ namespace DAQ_simulator
 
             showSensorData.DataSource = sd;
 
-
+             
 
             // Storing individual sensor values in an array to take average later
             sensor1sumarray[counter1] += sensorvaluearray[0];
@@ -120,6 +133,9 @@ namespace DAQ_simulator
             sensor10sumarray[counter1] += sensorvaluearray[9];
             sensor11sumarray[counter1] += sensorvaluearray[10];
             sensor12sumarray[counter1] += sensorvaluearray[11];
+
+            this.chart1.Series["sensor1_Value"].Points.AddY(sensorvaluearray[0]);
+            counter1++;
         }
 
         // Showing the average of sensor value till now
@@ -149,6 +165,60 @@ namespace DAQ_simulator
             }
 
             showLogData.DataSource = log;
+            this.chart2.Series["sensor1_Average"].Points.AddY(mafilterarray[0]);
+
+            // Resetting the counter since the sensor values are getting stored 
+            // continously to take average
+            counter1 = 0;
+        }
+
+        private void btnLog_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Logging the sensor data to a log file
+                StringBuilder log = new StringBuilder();
+                log.AppendLine("Sensor ID, Value, Date and Time");
+                string logpath = "C:\\Users\\shailu k\\Documents\\software engg\\Assignment_1\\Coding\\DAQ_simulator\\bin\\Debug\\log.csv";
+                for (int i = 0; i <= 11; i++)
+                {
+                    string first = sensoridarray[i].ToString();
+                    string second = sensorvaluearray[i].ToString("F3");
+                    string third = DateTime.Now.ToString();
+                    var newline = string.Format("{0}, {1}, {2}", first, second, third);
+                    log.AppendLine(newline);
+                }
+                File.AppendAllText(logpath, log.ToString());
+
+
+                MessageBox.Show("Data Logged Succesfully");
+            }
+            catch (IOException error)
+            {
+               
+                MessageBox.Show("Data cannot be logged because the file is already open.\n " +
+                    "Please close the file and try again.");
+            }
+        }
+
+        private void aboutApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Continous data acqustion and logging system\n" +
+                "8 Analog and 4 Digital sensor values are displayed \n" +
+                "Initially they are not filtered \n" +
+                "Moving Average Filter is used after data sampling is done \n" +
+                "The result of filtered data is also displayed. ", "About Application", MessageBoxButtons.OK);
+        }
+
+        private void aboutDeveloperToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Shailesh Kharche \nDeveloped at USN \nIIA 230760 ", "About Developer", MessageBoxButtons.OK);
+
+        }
+
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
         }
     }
 }
